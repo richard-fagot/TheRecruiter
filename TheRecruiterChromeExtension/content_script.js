@@ -10,6 +10,8 @@ var storeCandidats = function() {
 		console.log("Now there are : " + newCandidats.length);
 
 		chrome.storage.local.set({'candidats':newCandidats}, function() {console.log("Success")});
+
+
 	});
 	
 }
@@ -30,11 +32,11 @@ var getCandidats = function() {
 console.log("Get first result page");
 storeCandidats();*/
 //$(".btn-pagination:has(span):contains(suivant)")[0].click();
-var next = $("li:not(.disabled):has(.btn-pagination:has(span):contains(suivant)) > a")[0];
-if(!(next === undefined)) {
-	next.click();
-}
-console.log(next);
+// var next = $("li:not(.disabled):has(.btn-pagination:has(span):contains(suivant)) > a")[0];
+// if(!(next === undefined)) {
+// 	next.click();
+// }
+// console.log(next);
 /*console.log("Get second result page");
 storeCandidats();
 */
