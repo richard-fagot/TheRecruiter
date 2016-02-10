@@ -1,0 +1,13 @@
+{  
+    "manifest_version": 2,  
+
+    "name": "Such Activity",  
+    "description": "Wow",  
+    "version": "1.0",    
+    "permissions": ["tabs", "activeTab", "<all_urls>", "storage"],  
+
+    "browser_action": {  
+        "default_icon": "icon.png",  
+        "default_popup": "popup.html"  
+    }
+}
