@@ -38,6 +38,26 @@ var initPage = function() {
 	
 
 	/*
+		Ajoute le flag "déjà contacté".
+	*/
+	chrome.storage.local.get('contacted', function(data) {
+			
+			var vault = data.contacted;
+			
+			if(!(vault === undefined)) {
+
+				candidats = getCandidats();
+
+				for(i = 0 ; i < candidats.length ; i++) {
+					console.log("Check if is contacted : '" + candidats[i] + "' " + $.inArray(candidats[i], vault));
+					if($.inArray(candidats[i], vault) != -1) {
+						$("h2.fullname:has(a) a[href*='"+candidats[i]+"']").append('<button id="contacted" class="btn btn-secondary">Déjà contacté</button>');
+					}
+				}
+			}
+	});
+	
+	/*
 		Ajoute un bouton pour supprimer un candidat du champ de recherche
 	*/
 	$("h2.fullname:has(a)").append('<button class="btn btn-secondary notrelevant">X</button>');
@@ -68,11 +88,13 @@ var initPage = function() {
 				for(i = 0 ; i < candidats.length ; i++) {
 					console.log("Check if is not relevant : '" + candidats[i] + "' " + $.inArray(candidats[i], vault));
 					if($.inArray(candidats[i], vault) != -1) {
-						$("h2.fullname:has(a) a[href*='"+candidats[i]+"']").parents(".profile-card__overview").html("")
+						$("h2.fullname:has(a) a[href*='"+candidats[i]+"']").parents(".profile-card__overview").html("");
 					}
 				}
 			}
 	});
+
+	
 };
 
 window.setTimeout(initPage, 2000);
