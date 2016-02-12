@@ -21,7 +21,7 @@ var initPage = function() {
 			profileID = getProfileID();
 
 			storeNotRelevant(profileID);
-			$(".profile-fullName").css('text-decoration', 'line-through')
+			$(".profile-fullName").css('text-decoration', 'line-through');
 	});
 
 	/*

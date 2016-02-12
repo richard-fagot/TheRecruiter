@@ -56,7 +56,7 @@ var initPage = function() {
 				}
 			}
 	});
-	
+
 	/*
 		Ajoute un bouton pour supprimer un candidat du champ de recherche
 	*/
@@ -70,7 +70,8 @@ var initPage = function() {
 		profileID = getProfileID(profileURL);
 
 		storeNotRelevant(profileID);
-		$(event.target).parents(".profile-card__overview").html("")
+		$(event.target).parents(".profile-card__overview").css("background", "#E0E2E4");
+		$(event.target).siblings('a').css("text-decoration", 'line-through');
 	});
 
 
@@ -88,13 +89,17 @@ var initPage = function() {
 				for(i = 0 ; i < candidats.length ; i++) {
 					console.log("Check if is not relevant : '" + candidats[i] + "' " + $.inArray(candidats[i], vault));
 					if($.inArray(candidats[i], vault) != -1) {
-						$("h2.fullname:has(a) a[href*='"+candidats[i]+"']").parents(".profile-card__overview").html("");
+						$("h2.fullname:has(a) a[href*='"+candidats[i]+"']").parents(".profile-card__overview").css("background", "#E0E2E4");
+						$("h2.fullname:has(a) a[href*='"+candidats[i]+"']").css("text-decoration", 'line-through');
 					}
 				}
 			}
 	});
 
-	
+	$(".paginator > li a").on('click', function(event) {
+		console.log('initpage by the navigator');
+		window.setTimeout(initPage, 2000);
+	});
 };
 
 window.setTimeout(initPage, 2000);
