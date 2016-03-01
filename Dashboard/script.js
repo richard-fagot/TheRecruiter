@@ -20,6 +20,7 @@ Trello.authorize({
 var recruiterBoard = "56b8a4206acb32500891b5b9";
 
 var stats = {
+	profilesReviewed: 0,
 	contacted: 0,
 	called: 0,
 	interviewed: 0,
@@ -80,6 +81,7 @@ var getCardsFromList = function(cardID) {
 }
 
 var displayStats = function() {
+	$("#profilesReviewed").text(stats.profilesReviewed);
 	$("#contacted").text( stats.contacted);
 	$("#hasResponse").text( stats.hasResponse);
 	$("#called").text( stats.called);
@@ -114,6 +116,22 @@ var displayChart = function() {
     chart.draw(data, options);
 }
 
+var getProfilesReviewed = function() {
+	var deferred = $.ajax({
+		url: "https://api.trello.com/1/lists/56b8b4c9d4f4301eeffc176b/cards?key=b1f2a0219e4c69b472b5721208b95535&token=4c0ab28b6f92a1f13abf9fc1e1ac3932345135a62ea248897e6f33c7c2a472c1",
+       
+    }).then(function(response){ 
+       for(i = 0 ; i < response.length ; i++) {
+       		var name = response[i].name;
+       		var qty = name.match(/\d+/);
+       		if(qty != null) {
+       			stats.profilesReviewed += parseInt(qty[0]);
+       		}
+       }
+    });
+    return deferred;
+}
+
 var computeStats = function() {
 	//stats.contacted = stats.called + stats.hasResponse + stats.interviewed + stats.hired + stats.rejected + stats.notinterested ;
 }
@@ -126,6 +144,7 @@ var refreshPage = function() {
 
 var drawChart = function() {
 
+	var d0 = getProfilesReviewed();
 	var d1 = getCardsFromList(lists.contacted);
 	var d2 = getCardsFromList(lists.called);
 	var d3 = getCardsFromList(lists.rejected);
@@ -134,8 +153,9 @@ var drawChart = function() {
 	var d6 = getCardsFromList(lists.hired);
 	var d7 = getCardsFromList(lists.hasResponse);
 
-	$.when(d1, d2, d3, d4, d5, d6, d7).then(refreshPage);
+	$.when(d0, d1, d2, d3, d4, d5, d6, d7).then(refreshPage);
 }
 
+// Création du graphique et des statistiques.
 google.charts.load('current', {packages: ['bar']});
 google.charts.setOnLoadCallback(drawChart);
